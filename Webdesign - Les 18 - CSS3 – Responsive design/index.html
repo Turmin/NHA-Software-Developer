@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        html,body {
+            color: black;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+        }
+
+        header {
+            min-height: 80px;
+            padding: 2rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1em;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: rgb(79, 2, 114);
+            background-image: url("images/header.webp");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .menu {
+            background-color: rgb(125, 106, 146);
+            color: white;
+        }
+
+        .menu h3 {
+            text-align: center;
+        }
+
+        article {
+            overflow: auto;
+            margin-bottom: 2rem;
+        }
+
+        .article-image {
+            display: block;
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            margin: 0 auto 15px auto;
+        }
+
+        footer {
+            clear: both;
+            min-height: 100px;
+            background-color: rgb(80, 43, 97);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+            padding: 8px;
+        }
+
+        [class*="col-"] {
+            width: 100%;
+            padding: 15px;
+        }
+
+        @media only screen and (min-width: 768px) {
+            body {
+                font-size: 18px;
+            }
+
+            h1 {
+                font-size: 4rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            header {
+                min-height: 100px;
+                padding: 3rem 2rem;
+            }
+
+            .menu {
+                min-height: 700px;
+            }
+
+            [class*="col-"] {
+                float: left;
+                padding: 15px;
+            }
+
+            .col-1 {
+                width: 8.33%;
+            }
+
+            .col-2 {
+                width: 16.66%;
+            }
+
+            .col-3 {
+                width: 25%;
+            }
+
+            .col-4 {
+                width: 33.33%;
+            }
+
+            .col-5 {
+                width: 41.66%;
+            }
+
+            .col-6 {
+                width: 50%;
+            }
+
+            .col-7 {
+                width: 58.33%;
+            }
+
+            .col-8 {
+                width: 66.66%;
+            }
+
+            .col-9 {
+                width: 75%;
+            }
+
+            .col-10 {
+                width: 83.33%;
+            }
+
+            .col-11 {
+                width: 91.66%;
+            }
+
+            .col-12 {
+                width: 100%;
+            }
+
+            .article-image {
+                width: 320px;
+                float: right;
+                margin: 24px 0 0 15px;
+            }
+        }
+    </style>
+    <title>Responsive Design</title>
+</head>
+<body>
+
+
+<header>
+    <h1>Rectum</h1>
+</header>
+
+<main class="row">
+    <aside class="col-2 menu">
+        <h3>Feitjes over Rectum</h3>
+        <ol>
+            <li>Meest bijzondere plaatsnaam van Nederland.</li>
+            <li>Het ligt in de gemeente Wierden, in Twente.</li>
+            <li>Rectum is al eeuwenoud; het werd al rond 1260-1270 genoemd.</li>
+            <li>Er wonen maar een paar honderd mensen.</li>
+            <li>Rectum heeft een oppervlakte van ongeveer 5,8 km².</li>
+        </ol>
+    </aside>
+
+    <section class="col-9">
+        <div>
+            <article>
+                <img src="images/731a7c6c-4dd9-3bda-bd63-7b77a3e713ec.jpg" alt="Goud uit Rectum: wijn met wereldklasse" class="article-image">
+                <h2>Goud uit Rectum: wijn met wereldklasse</h2>
+                <p>Goud op wereldniveau voor wijngaard uit Rectum: &lsquo;Meteen scoren uit eerste productie verwacht je niet&rsquo;</p>
+                <p>In Rectum wordt niet alleen gewoond en gewandeld, maar ook wijn gemaakt. En met succes: De Wijnmakers uit Rectum wonnen met hun eerste productie meteen goud op internationaal niveau. Hun Rode Ros 2018 viel in de prijzen bij een grote wijnkeuring in Wenen. Een verrassende prestatie voor zo&rsquo;n kleine buurtschap en natuurlijk een extra leuk feitje bij de bijzondere plaatsnaam Rectum.
+                </p>
+            </article>
+        </div>
+
+        <div>
+            <article>
+                <img src="images/tankenberg-twente-1120x747.jpg" alt="Het Twentse decor van Rectum" class="article-image">
+                <h2>Het Twentse decor van Rectum</h2>
+                <p>Rond Rectum zie je het typische Twentse coulisselandschap: een afwisselend decor van weilanden, houtwallen, bomenrijen, oude boerenerven en smalle landweggetjes. Daardoor voelt het landschap bijna als een reeks &ldquo;kamers&rdquo; in de natuur. Via het Ommetje Rectum-Ypelo wandel je zo&rsquo;n 10,3 kilometer door dit gebied, langs oude erven, waterwingebied en nieuwe natuur.</p>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&ldquo;Het kan allemaal in Twente&rdquo;</p>
+</footer>
+    
+</body>
+</html>
