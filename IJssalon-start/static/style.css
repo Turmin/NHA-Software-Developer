@@ -1,0 +1,122 @@
+/*
+    This Stylesheet is used to apply styling directly to the layout.html
+    Use this stylesheet when you want apply to all templates that use layout.html
+*/
+body {
+    background-color: #be6c00;
+    background-image: url(https://i.imgur.com/x8JbAe0.png);
+    background-size: cover;
+    font-family: 'Pushster', cursive;
+}
+
+h1, h2 {
+    color: ivory;
+    background-color: rgb(37, 47, 56);
+    padding: 5px;
+    font-family: 'Pushster', cursive;
+    text-align: center;
+}
+
+h3, h4, h5{
+    text-align: center;
+    color: beige;
+}
+
+h6{
+
+}
+
+a{
+    font-size: 16px;
+    color: white;
+    border-radius: 5px;
+    background-color: rgb(61, 25, 1);
+    padding: 5px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+a:hover{
+    text-decoration: none;
+    color: rgb(155, 134, 76);
+}
+
+a::after{
+    color: black;
+}
+
+.welcome{
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding: 5px;
+    width: 100%;
+    background-color: rgb(61, 25, 1);
+    color: white;
+    text-align: center;
+  }
+
+.menu{
+    border:rgb(238, 158, 105) solid 3px;
+    border-radius: 5px;
+    height: 120px;
+}
+
+.home_img{
+    text-align: center;
+    border-radius: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    width: auto;
+}
+
+.center{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.flex-container{
+  display: flex;
+}
+
+.left_panel{
+  width: 200px;
+  height: 200px;
+  margin: 30px;
+  padding-top: 60px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: rgb(61, 25, 1);
+  font-family: 'Pushster', cursive;
+}
+
+.mid_panel{
+    width: 320px;
+}
+
+.right_panel{
+    width: 200px; 
+    height: 200px;
+    margin: 30px;
+    padding-top: 60px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgb(61, 25, 1);
+    font-family: 'Pushster', cursive;
+}
+
+.items-list{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.recept{
+    border-radius: 5px;
+}

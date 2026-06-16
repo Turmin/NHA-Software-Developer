@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    
+    <br>
+    <div class="flex-container">
+        <div class="center">
+            <h3 class="welcome">Prijzen</h3>
+            {% for item in items %}
+                <p class="items-list">
+                    <span>{{item.product}}</span>
+                    <span>.................</span>
+                    <span>{{item.prijs}}</span>
+                </p>
+            {% endfor %}
+        </div>
+        <div class="menu">
+            <h3><a href="/">naar Home page</a></h3>
+            <h3><a href="/recepten">naar Recepten</a></h3>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+   
+{% endblock %}
