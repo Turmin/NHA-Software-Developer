@@ -162,3 +162,5 @@ cython_debug/
 huiswerkopgaven.md
 study-progress.md
 *.txt
+*.pdf
+*.csv
