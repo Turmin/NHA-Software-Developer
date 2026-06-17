@@ -22,3 +22,20 @@ def fooi_pp(bedrag, personen):
 # p = int(input("Over hoeveel mensen moet de pot verdeeld worden? "))
 
 # print(fooi_pp(b,p))
+
+def onderstreep(tekst=""):
+    uit = []
+    uit.append(tekst)
+    uit.append(len(tekst) * "=")
+    return uit
+
+def som(getallen: dict):
+    """
+    Args:
+        getallen (dict): een dictionary met getallen als waarden
+
+    Returns:
+        int: de som van de waarden in de dictionary
+    """
+    if type(getallen) != dict: return
+    return sum(getallen.values())
