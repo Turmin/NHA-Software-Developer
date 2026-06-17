@@ -1,6 +1,12 @@
 import math
 
 def discriminant(a, b, c):
+    """
+    Args:
+        a (int): de coëfficiënt van x^2;
+        b (int): de coëfficiënt van x;
+        c (int): het constante getal.
+    """
     try:
         a = int(a)
         b = int(b)
