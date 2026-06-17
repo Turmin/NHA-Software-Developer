@@ -7,7 +7,6 @@ Correctie: index 24 moet index 23 zijn.
 7.5 Formatted strings
 "Hoewel er hier is gebruikgemaakt van een formatted string, is deze code juist"
 
-
 7.6.2 .upper()
 Met de string-method .upper() kunt u alle kleine letters in een string omzetten in hoofdletters (in het Engels ook wel uppercase letters genoemd). Bijvoorbeeld:
 
@@ -15,4 +14,8 @@ print("Mijn Voorbeeld").lower()	MIJN VOORBEELD
 
 Correctie: lower() moet hier upper() zijn.
 
+7.11 Bestand ‘helper.py’ toevoegen
 
+van de achterkant van webshop
+
+Correctie: van de webshop
