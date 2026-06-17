@@ -6,7 +6,7 @@ def aanbieding_1(smaak, prijs, korting):
     aanbiedingsprijs = f"{prijs * (1 - korting):.2f}".replace(".", ",") # afronden op 2 decimalen en punt vervangen door komma
     return f"Vandaag in de aanbieding: emmertje ijs (1 liter) in de smaak {smaak}, van {prijs:g} euro voor {aanbiedingsprijs} euro."
 
-print(aanbieding_1("aardbei", 4, 0.1)) # Vandaag in de aanbieding: emmertje ijs (1 liter) in de smaak aardbei, van 4 euro voor 3,6 euro.
+print(aanbieding_1("aardbei", 4, 0.1)) # Vandaag in de aanbieding: emmertje ijs (1 liter) in de smaak aardbei, van 4 euro voor 3,60 euro.
 
 """Opdracht 6
 """
