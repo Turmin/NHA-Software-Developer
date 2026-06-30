@@ -1,15 +1,9 @@
 """
-Python Gui met Tkinter - Les 7 - De Radiobutton
+Python Gui met Tkinter - Les 6 - Het Entry-veld (3)
 
-Deze huiswerkopdracht is vrijwel identiek aan die uit les 6. Het verschil is het gebruik van radio buttons.
-De bovenste drie radio buttons geven aan waar u de data vandaan haalt, de onderste twee radio buttons bepalen waar de data terechtkomt.
-
-Bouw het scherm uit de vorige opdracht uit met een aantal list boxen.
-In één list box staat een aantal ziektes en in de andere list box een aantal artsen.
-De bedoeling is dat er, als de combinatie wordt gekozen,
-bijvoorbeeld oorsuizen en Dr. Simone Groen, in een label komt te staan:
-
-U heeft gekozen voor Dr. Simone Groen voor een behandeling voor oorsuizen.
+De opdracht die bij deze les hoort, is dat u het derde scherm gaat voorzien van widgets.
+Bouw het scherm uit de vorige opdracht uit met een aantal Listboxen. In één box staat een aantal ziektes en in de andere box een aantal artsen. De bedoeling is dat, als er een bepaalde combinatie wordt gekozen, bijvoorbeeld leukemie en Dr. Simone Groen, dan in een label komt te staan:
+U heeft gekozen voor Dr. Simone Groen voor een behandeling voor leukemie.
 """
 
 import re
@@ -19,21 +13,7 @@ from tkinter import Tk, Frame, StringVar, Label, Button, Radiobutton, ttk, FLAT,
 
 DATABASE_PATH = Path(__file__).parent / "database.db"
 ARTS_FILE_PATH = Path(__file__).parent / "artsen.txt"
-"""
-artsen.txt
-
-Dr. Anna Brouwer
-Dr. Bas Meijer
-Dr. Celia de Jong
-"""
 ZIEKTES_FILE_PATH = Path(__file__).parent / "ziektes.txt"
-"""
-ziektes.txt
-
-Oorsuizen
-Hoofdpijn
-Rugpijn
-"""
 
 def get_connection():
     """
@@ -446,6 +426,51 @@ def create_radiobutton(parent, text, variable, value):
     )
 
 
+def create_label(parent, text="", **options):
+    """
+    Maakt een label met standaard dezelfde achtergrond als het frame waarin hij staat.
+    """
+    defaults = {
+        "text": text,
+        "bg": parent.cget("bg"),
+        "fg": "white"
+    }
+    defaults.update(options)
+
+    return Label(parent, **defaults)
+
+
+def create_button(parent, text, command=None, **options):
+    """
+    Maakt een knop met de standaard blauwe knopstijl van de applicatie.
+    """
+    defaults = {
+        "text": text,
+        "command": command,
+        "fg": "white",
+        "bg": "#1E5593",
+        "relief": FLAT,
+        "padx": 10,
+        "pady": 5
+    }
+    defaults.update(options)
+
+    return Button(parent, **defaults)
+
+
+def create_entry(parent, textvariable, **options):
+    """
+    Maakt een invoerveld met de standaard paddingstijl van de applicatie.
+    """
+    defaults = {
+        "textvariable": textvariable,
+        "style": "Padded.TEntry"
+    }
+    defaults.update(options)
+
+    return ttk.Entry(parent, **defaults)
+
+
 def show_login_screen(status_message="", focus_password=False):
     """
     Loginscherm van de applicatie. Hier kan de gebruiker zijn e-mailadres en
@@ -577,13 +602,13 @@ def show_dashboard_screen():
     root.title("Dashboard patiëntenbeheer - Streekziekenhuis de Blauwe Berg")
     root.geometry("800x600")
 
-    dashboard_frame = Frame(root, bg="#4E96D2")
-    dashboard_frame.pack(padx=10, pady=10, fill="both", expand=True)
+    dashboard = Frame(root, bg="#4E96D2")
+    dashboard.pack(padx=10, pady=10, fill="both", expand=True)
 
-    dashboard_frame.columnconfigure(0, weight=1)
-    dashboard_frame.columnconfigure(1, weight=0)
-    dashboard_frame.columnconfigure(2, weight=1)
-    dashboard_frame.rowconfigure(1, weight=1)
+    dashboard.columnconfigure(0, weight=1)
+    dashboard.columnconfigure(1, weight=0)
+    dashboard.columnconfigure(2, weight=1)
+    dashboard.rowconfigure(1, weight=1)
 
     patients_by_name = {}
 
@@ -766,72 +791,73 @@ def show_dashboard_screen():
             return
 
         selected_arts = listbox_arts.get(selected_arts_indexes[0])
+        selected_arts_name = selected_arts.split(" (", 1)[0]
         selected_ziekte = listbox_ziekte.get(selected_ziekte_indexes[0])
 
-        show_status(f"U heeft gekozen voor {selected_arts} voor een behandeling voor {selected_ziekte.lower()}.", success=True)
+        show_status(f"U heeft gekozen voor {selected_arts_name} voor een behandeling voor {selected_ziekte}.", success=True)
 
 
-    Label(dashboard_frame, text="Dashboard patiëntenbeheer", bg="#4E96D2", fg="white", font=("Arial", 14)).grid(row=0, column=0, sticky="w")
-    Button(dashboard_frame, text="Uitloggen", fg="white", bg="#1E5593", relief=FLAT, command=logout, padx=10, pady=5).grid(row=0, column=2, padx=5, sticky="e")
+    create_label(dashboard, "Dashboard patiëntenbeheer", font=("Arial", 14)).grid(row=0, column=0, sticky="w")
+    create_button(dashboard, "Uitloggen", logout).grid(row=0, column=2, padx=5, sticky="e")
 
-    patient_form = Frame(dashboard_frame, bg="#4E96D2")
-    patient_form.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")
+    patientform = Frame(dashboard, bg="#4E96D2")
+    patientform.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")
 
-    patient_form.columnconfigure(0, weight=1)
-    patient_form.columnconfigure(1, weight=1)
-    patient_form.rowconfigure(1, weight=1)
+    patientform.columnconfigure(0, weight=1)
+    patientform.columnconfigure(1, weight=1)
+    patientform.rowconfigure(1, weight=1)
 
-    status_label = Label(patient_form, text="", bg="#f8d7da", bd=1, fg="#721c24", font=("Arial", 10), padx=8, pady=4, anchor="w")
+    status_label = create_label(patientform, "", bg="#f8d7da", bd=1, fg="#721c24", font=("Arial", 10), padx=8, pady=4, anchor="w")
     status_label.grid(row=0, column=0, columnspan=2, padx=5, pady=(0, 10), sticky="ew")
     status_label.grid_remove()
 
-    left_frame = Frame(patient_form, bg="#4E96D2")
-    left_frame.grid(row=1, column=0, padx=(0, 10), sticky="new")
+    left_form = Frame(patientform, bg="#4E96D2")
+    left_form.grid(row=1, column=0, padx=(0, 10), sticky="new")
 
-    left_frame.columnconfigure(0, weight=0)
-    left_frame.columnconfigure(1, weight=1)
+    left_form.columnconfigure(0, weight=0)
+    left_form.columnconfigure(1, weight=1)
 
-    label_patient = Label(left_frame, text="Patiënt:", fg="white", bg="#4E96D2", anchor="e")
+    label_patient = create_label(left_form, "Patiënt:", anchor="e")
     label_patient.grid(row=0, column=0, padx=5, pady=5, sticky="e")
 
-    patient_select_frame = Frame(left_frame, bg="#4E96D2")
+    patient_select_frame = Frame(left_form, bg="#4E96D2")
     patient_select_frame.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
     patient_combobox = ttk.Combobox(patient_select_frame, postcommand=fill_patient_combobox, style="Padded.TCombobox", width=30)
     patient_combobox.grid(row=0, column=0, sticky="w")
 
-    Button(patient_select_frame, text="Toon patiënt", command=show_patient).grid(row=0, column=1, padx=(5, 0), sticky="w")
+    create_button(patient_select_frame, "Toon patiënt", show_patient, padx=0, pady=0).grid(row=0, column=1, padx=(5, 0), sticky="w")
 
-    label_fullname = Label(left_frame, text="", bg="#4E96D2", fg="white", font=("Arial", 14))
+    label_fullname = create_label(left_form, "", font=("Arial", 14))
     label_fullname.grid(row=1, column=1, padx=5, pady=5, sticky="w")
 
-    right_frame = Frame(patient_form, bg="#4E96D2")
-    right_frame.grid(row=1, column=1, padx=(20,0), sticky="nsew")
+    datasource_frame = Frame(patientform, bg="#4E96D2")
+    datasource_frame.grid(row=1, column=1, padx=(20,0), sticky="nsew")
 
-    right_frame.columnconfigure(0, weight=1)
-    right_frame.rowconfigure(4, weight=1)
+    datasource_frame.columnconfigure(0, weight=1)
+    datasource_frame.rowconfigure(3, weight=1)
 
-    label_datasource = Label(right_frame, text="Kies een databron", fg="white", bg="#4E96D2", font=("Arial", 12))
+    label_datasource = create_label(datasource_frame, "Kies een databron:", font=("Arial", 12))
     label_datasource.grid(row=0, column=0, padx=5, pady=(0, 5), sticky="w")
 
-    radiobutton_right_frame = Frame(right_frame, bg="#4E96D2")
-    radiobutton_right_frame.grid(row=1, column=0, padx=5, pady=(0, 10), sticky="w")
+    radiobutton_datasource_frame = Frame(datasource_frame, bg="#4E96D2")
+    radiobutton_datasource_frame.grid(row=1, column=0, padx=5, pady=(0, 10), sticky="w")
 
-    radiobutton_datasource_database = create_radiobutton(radiobutton_right_frame, "Database", selected_datasource, "database")
+    radiobutton_datasource_database = create_radiobutton(radiobutton_datasource_frame, "Database", selected_datasource, "database")
     radiobutton_datasource_database.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
-    radiobutton_datasource_file = create_radiobutton(radiobutton_right_frame, "Bestand", selected_datasource, "bestand")
+    radiobutton_datasource_file = create_radiobutton(radiobutton_datasource_frame, "Bestand", selected_datasource, "bestand")
     radiobutton_datasource_file.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
-    radiobutton_datasource_input = create_radiobutton(radiobutton_right_frame, "Tekstveld", selected_datasource, "tekstveld")
+    radiobutton_datasource_input = create_radiobutton(radiobutton_datasource_frame, "Tekstveld", selected_datasource, "tekstveld")
     radiobutton_datasource_input.grid(row=0, column=2, padx=5, pady=5, sticky="w")
 
-    datasource_input_frame = Frame(right_frame, bg="#4E96D2")
+    datasource_input_frame = Frame(datasource_frame, bg="#4E96D2")
     datasource_input_frame.grid(row=2, column=0, padx=5, pady=(0, 10), sticky="ew")
 
     datasource_input_frame.columnconfigure(0, weight=1)
 
-    entry_datasource_input = ttk.Entry(datasource_input_frame, textvariable=datasource_input, style="Padded.TEntry")
+    entry_datasource_input = create_entry(datasource_input_frame, datasource_input)
     entry_datasource_input.grid(row=0, column=0, padx=(0, 5), sticky="ew")
 
     radiobutton_datasource_input_arts = create_radiobutton(datasource_input_frame, "Arts", selected_datasource_input_type, "arts")
@@ -840,20 +866,17 @@ def show_dashboard_screen():
     radiobutton_datasource_input_ziekte = create_radiobutton(datasource_input_frame, "Ziekte", selected_datasource_input_type, "ziekte")
     radiobutton_datasource_input_ziekte.grid(row=0, column=2, padx=5, sticky="w")
 
-    button_load_data = Button(datasource_input_frame, text="Gebruik databron", fg="white", bg="#1E5593", relief=FLAT, command=load_data_from_selected_source, padx=10, pady=5)
+    button_load_data = create_button(datasource_input_frame, "Gebruik databron", load_data_from_selected_source)
     button_load_data.grid(row=1, column=0, columnspan=3, pady=(8, 0), sticky="w")
 
-    label_make_link = Label(right_frame, text="Koppel een specialist aan een ziektebeeld", fg="white", bg="#4E96D2", font=("Arial", 12))
-    label_make_link.grid(row=3, column=0, padx=5, pady=(5, 0), sticky="w")
-
-    listbox_frame = Frame(right_frame, bg="#4E96D2")
-    listbox_frame.grid(row=4, column=0, sticky="nsew")
+    listbox_frame = Frame(datasource_frame, bg="#4E96D2")
+    listbox_frame.grid(row=3, column=0, sticky="nsew")
 
     listbox_frame.columnconfigure(0, weight=1)
     listbox_frame.columnconfigure(1, weight=1)
     listbox_frame.rowconfigure(1, weight=1)
 
-    listbox_arts_label = Label(listbox_frame, text="Artsen:", fg="white", bg="#4E96D2", anchor="w")
+    listbox_arts_label = create_label(listbox_frame, "Artsen:", anchor="w")
     listbox_arts_label.grid(row=0, column=0, padx=5, pady=5, sticky="w")
 
     listbox_arts = Listbox(listbox_frame, selectmode="single", exportselection=False, bg="white", fg="black", font=("Arial", 10), height=10)
@@ -863,7 +886,7 @@ def show_dashboard_screen():
 
     fill_arts_listbox()
 
-    listbox_ziekte_label = Label(listbox_frame, text="Ziektes:", fg="white", bg="#4E96D2", anchor="w")
+    listbox_ziekte_label = create_label(listbox_frame, "Ziektes:", anchor="w")
     listbox_ziekte_label.grid(row=0, column=1, padx=5, pady=5, sticky="w")
 
     listbox_ziekte = Listbox(listbox_frame, selectmode="single", exportselection=False, bg="white", fg="black", font=("Arial", 10), height=10)
@@ -873,52 +896,52 @@ def show_dashboard_screen():
 
     fill_ziekte_listbox()
 
-    label_voornaam = Label(left_frame, text="Voornaam:", fg="white", bg="#4E96D2", anchor="e")
+    label_voornaam = create_label(left_form, "Voornaam:", anchor="e")
     label_voornaam.grid(row=2, column=0, padx=5, pady=5, sticky="e")
 
-    entry_voornaam = ttk.Entry(left_frame, textvariable=patient_voornaam, style="Padded.TEntry")
+    entry_voornaam = create_entry(left_form, patient_voornaam)
     entry_voornaam.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
 
-    label_tussenvoegsel = Label(left_frame, text="Tussenvoegsel:", fg="white", bg="#4E96D2", anchor="e")
+    label_tussenvoegsel = create_label(left_form, "Tussenvoegsel:", anchor="e")
     label_tussenvoegsel.grid(row=3, column=0, padx=5, pady=5, sticky="e")
 
-    entry_tussenvoegsel = ttk.Entry(left_frame, textvariable=patient_tussenvoegsel, style="Padded.TEntry")
+    entry_tussenvoegsel = create_entry(left_form, patient_tussenvoegsel)
     entry_tussenvoegsel.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
 
-    label_achternaam = Label(left_frame, text="Achternaam:", fg="white", bg="#4E96D2", anchor="e")
+    label_achternaam = create_label(left_form, "Achternaam:", anchor="e")
     label_achternaam.grid(row=4, column=0, padx=5, pady=5, sticky="e")
 
-    entry_achternaam = ttk.Entry(left_frame, textvariable=patient_achternaam, style="Padded.TEntry")
+    entry_achternaam = create_entry(left_form, patient_achternaam)
     entry_achternaam.grid(row=4, column=1, padx=5, pady=5, sticky="ew")
 
-    label_straat = Label(left_frame, text="Straat:", fg="white", bg="#4E96D2", anchor="e")
+    label_straat = create_label(left_form, "Straat:", anchor="e")
     label_straat.grid(row=5, column=0, padx=5, pady=5, sticky="e")
 
-    entry_straat = ttk.Entry(left_frame, textvariable=patient_straat, style="Padded.TEntry")
+    entry_straat = create_entry(left_form, patient_straat)
     entry_straat.grid(row=5, column=1, padx=5, pady=5, sticky="ew")
 
-    label_huisnr = Label(left_frame, text="Huisnummer:", fg="white", bg="#4E96D2", anchor="e")
+    label_huisnr = create_label(left_form, "Huisnummer:", anchor="e")
     label_huisnr.grid(row=6, column=0, padx=5, pady=5, sticky="e")
 
-    entry_huisnr = ttk.Entry(left_frame, textvariable=patient_huisnr, style="Padded.TEntry")
+    entry_huisnr = create_entry(left_form, patient_huisnr)
     entry_huisnr.grid(row=6, column=1, padx=5, pady=5, sticky="ew")
 
-    label_postcode = Label(left_frame, text="Postcode:", fg="white", bg="#4E96D2", anchor="e")
+    label_postcode = create_label(left_form, "Postcode:", anchor="e")
     label_postcode.grid(row=7, column=0, padx=5, pady=5, sticky="e")
 
-    entry_postcode = ttk.Entry(left_frame, textvariable=patient_postcode, style="Padded.TEntry")
+    entry_postcode = create_entry(left_form, patient_postcode)
     entry_postcode.grid(row=7, column=1, padx=5, pady=5, sticky="ew")
 
-    label_woonplaats = Label(left_frame, text="Woonplaats:", fg="white", bg="#4E96D2", anchor="e")
+    label_woonplaats = create_label(left_form, "Woonplaats:", anchor="e")
     label_woonplaats.grid(row=8, column=0, padx=5, pady=5, sticky="e")
 
-    entry_woonplaats = ttk.Entry(left_frame, textvariable=patient_woonplaats, style="Padded.TEntry")
+    entry_woonplaats = create_entry(left_form, patient_woonplaats)
     entry_woonplaats.grid(row=8, column=1, padx=5, pady=5, sticky="ew")
 
-    label_mobiel = Label(left_frame, text="Mobiel:", fg="white", bg="#4E96D2", anchor="e")
+    label_mobiel = create_label(left_form, "Mobiel:", anchor="e")
     label_mobiel.grid(row=9, column=0, padx=5, pady=5, sticky="e")
 
-    entry_mobiel = ttk.Entry(left_frame, textvariable=patient_mobiel, style="Padded.TEntry")
+    entry_mobiel = create_entry(left_form, patient_mobiel)
     entry_mobiel.grid(row=9, column=1, padx=5, pady=5, sticky="ew")
 
 
